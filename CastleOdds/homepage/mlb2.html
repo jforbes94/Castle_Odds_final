@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>MLB Page</title>
+
+	<link rel="stylesheet" href="./Sports_Lists.css">
+</head>
+<body>>
+	<div style="display: flex; flex-direction: row;">
+		<div style="width:75%; border: solid 2px #eeee;">
+	    	<div class="header_row">
+	  			<div class="row">
+	    			<div style="width:55%; text-align: left;" >
+	    				Matchup
+	    			</div>
+	    			<div style="width:15%; text-align: center;">
+	      				Spread
+	    			</div>
+	    			<div style="width:15%; text-align: center;">
+	      				O/U
+	    			</div>
+	    			<div style="width:15%; text-align: center;">
+						Moneyline
+	    			</div>
+	  			</div>
+	  		</div>
+	    {% for games in games%}
+	    	<div class="container">
+	    		<div class = "row">{{games.start_time}} </div>
+	  			<div class="row">
+	    			<div class="column_team" >
+	    				<p>{{games.away_team}}</p>
+	    			</div>
+	    			<div class="column_bet">
+	      				<p>{{games.away_spread}}</p>
+	    			</div>
+	    			<div class="column_bet">
+	      				<p>{{games.over_price}}</p>
+	    			</div>
+	    			<div class="column_bet">
+						<p>{{games.h2h_away_price}}</p>
+	    			</div>
+	  			</div>
+	  			<div class="row">
+	    			<div class="column_team">
+	    				<p>{{games.home_team}}</p>
+	    			</div>
+	    			<div class="column_bet">
+	      				<p>{{games.home_spread}}</p>
+	    			</div>
+	    			<div class="column_bet">
+	      				<p>{{games.under_price}}</p>
+	    			</div>
+	    			<div class="column_bet">
+						<p>{{games.h2h_home_price}}</p>
+	    			</div>
+	  			</div>
+	  		</div>
+	  	    {% endfor %}
+	  	</div>
+	  	<div class = "wager">
+	  		<h1>Your Wager</h1>
+	 		<div>
+	 			<p style="font-size: medium;"> Your best bet is on {{%games.best_book%} </p>
+	 		</div>
+	 		<div style="display: flex; flex-direction: row;">
+	 			<div style="width: 50%;"> <p> {{%Selected Bet%}} </p> </div>
+	 			<form style= "width: 50%;">
+				  <input type="number" id="wager" name="wager">
+				</form>
+	 		</div>
+	 		<h2> Books with better odds</h2>
+	 			<div style="display:flex; flex-direction: row;">
+	 				<div style="width: 50%;" ><p> {{games.book2}}</p> </div>
+	 				<div style="width: 50%;"> <p> {{games.odds2}}</p></div>
+	 			</div>
+	 			<div style="display:flex; flex-direction: row;">
+	 				<div style="width: 50%;" ><p> {{games.book3}}</p> </div>
+	 				<div style="width: 50%;"> <p> {{games.odds3}}</p></div>
+	 			</div>
+	 		</br>
+	 		<div style="text-align: center;">
+	 			<p> Total Savings: {{Bet.Total_Savings}}
+	 		</div>
+
+	 		</br>
+	 		<button style="position: center;">Submit</button>
+
+
+	  	</div>
+
+
+</body>
+</html>

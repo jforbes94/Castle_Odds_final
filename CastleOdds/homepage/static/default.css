@@ -1,0 +1,218 @@
+.container {
+        display: flex;
+        flex-direction: column;
+        border-top: solid 1px #A8D0DB;
+        border-bottom: solid 1px #A8D0DB;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-left: 2%;
+        margin-top: 1%;
+        background-color: #ffffff;
+    }
+
+    .container_mlb {
+        /*display: flex;*/
+        flex-direction: column;
+        border-top: solid 1px #A8D0DB;
+        border-bottom: solid 1px #A8D0DB;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-left: 2%;
+        margin-top: 1%;
+        background-color: #ffffff;
+        display: none;
+    }
+
+    .container_mlb h3{
+        background-color: #eee"
+    }
+
+
+    .container_nba {
+        /*display: flex;*/
+        flex-direction: column;
+        border-top: solid 1px #A8D0DB;
+        border-bottom: solid 1px #A8D0DB;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-left: 2%;
+        margin-top: 1%;
+        background-color: #ffffff;
+        display: none;
+    }
+
+    .container_nhl {
+        /*display: flex;*/
+        flex-direction: column;
+        border-top: solid 1px #A8D0DB;
+        border-bottom: solid 1px #A8D0DB;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-left: 2%;
+        margin-top: 1%;
+        background-color: #ffffff;
+        display: none;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        align-items: left;
+    }
+    .row_away {
+        display: flex;
+        flex-direction: row;
+        align-items: left;
+        /*border-bottom: solid 1px #A8D0DB; */
+    }
+    .row_home {
+        display: flex;
+        flex-direction: row;
+        align-items: left;
+    }
+
+    .row:hover .element{
+    	color: red;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        /*border: solid 1px #A8D0DB; */
+        align-items: left;
+
+    }
+    .column_team_away {
+        display: flex;
+        flex-direction: column;
+        /*border-top: solid 1px #A8D0DB;*/
+        border-bottom: solid 1px #A8D0DB;
+        align-items: left;
+        width: 55%;
+        margin-left: 5%;
+
+    }
+
+    .column_team_home {
+        display: flex;
+        flex-direction: column;
+        /*border-bottom: solid 1px #A8D0DB;*/
+        align-items: left;
+        width: 55%;
+        margin-left: 5%;
+
+    }
+    .column_bet {
+        display: flex;
+        flex-direction: column;
+        border: solid 1px #A8D0DB;
+        align-items: center;
+        width: 15%;
+        background-color: #ffaf49;
+        justify-content: center ;
+        margin: 5px;
+    }
+    .column_bet p{
+       text-align: center;
+
+    }
+    .column_bet:hover {
+    	background-color: #a1e44d;
+    }
+    .header_row{
+    	margin-left: 2%;
+    	margin-right: 2%;
+    	border-bottom: solid 1px #A8D0DB;
+    	background-color: #ffffff
+    }
+    .header_row p{
+    	font-size: large;
+    }
+
+    .wager {
+    	width:15%;
+    	border: solid 2px #eeee;
+    	padding-left: 2%;
+    	padding-right: 2%;
+    }
+
+    .wager h1 {
+    	text-align: Center;
+    	font-size: xx-large;
+    }
+
+    .wager h2 {
+    	text-align: Center;
+    	font-size: large;
+    	color: darkgray;
+    }
+
+    .wager p {
+    	text-align: center;
+    	font-size: medium;
+
+    }
+
+    .betwindow {
+        visibility: hidden;
+    }
+
+    #bet {
+        width:50%;
+        visibility: hidden;
+    }
+
+    #book, #book2, #book3, #odds2, #odds3, #finalcalc {
+        font-size: medium;
+        visibility: hidden
+    }
+
+
+    .topnav {
+      overflow: hidden;
+      background-color: #a8d0db;
+    }
+
+    .topnav a {
+      float: left;
+      color: #261132;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .topnav a:hover {
+      background-color: #a1e44d;
+      color: black;
+    }
+
+    .topnav a.active {
+      background-color: #ffaf49;
+      color: white;
+    }
+
+    .topnav a.logo {
+      background-color: #3e2f5b;
+      color: white;
+    }
+
+    .league_filter {
+        text-align: center;
+        border: solid 1px #A8D0DB;
+    }
+
+    .league_select h3 {
+        text-align: center;
+        color: #3e2f5b;
+        font-size: Medium;
+    }
+
+    .league_filter p {
+        text-align: center;
+        color: #3e2f5b;
+    }
+
+    .league_filter:hover {
+    	background-color: #a1e44d;
+    }

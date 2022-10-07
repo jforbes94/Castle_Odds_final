@@ -1,0 +1,71 @@
+.container {
+		    display: flex;
+		    flex-direction: column;
+		    padding: 2%;
+		}
+
+
+		.row {
+		    display: flex;
+		    flex-direction: row;
+		    border: solid 2px #E2E000;
+		    align-items: left;
+		}
+
+		.row:hover .element{ 
+			color: red;
+		}
+
+		.column {
+		    display: flex;
+		    flex-direction: column;
+		    border: solid 2px #E2E000;
+		    align-items: left;
+
+		}
+		.column_team {
+		    display: flex;
+		    flex-direction: column;
+		    border: solid 2px #E2E000;
+		    align-items: left;
+		    width: 55%;
+		    
+		}
+		.column_bet {
+		    display: flex;
+		    flex-direction: column;
+		    border: solid 2px #E2E000;
+		    align-items: left;
+		    width: 15%;
+		    background-color: #eeee;
+		    
+		}
+		.column_bet:hover { 
+			background-color: #a1e44d;
+		}
+		.header_row{ 
+			font-size: smaller;
+			padding: 2%;
+		}
+
+		.wager {
+			width:25%; 
+			border: solid 2px #eeee;
+		}
+
+		.wager h1 {
+			text-align: Center;
+			font-size: xx-large;
+		}
+
+		.wager h2 {
+			text-align: Center;
+			font-size: large;
+			color: darkgray;
+		}
+
+		.wager p {
+			text-align: center;
+			font-size: medium;
+
+		}

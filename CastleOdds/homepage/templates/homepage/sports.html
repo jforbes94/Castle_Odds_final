@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Castle Odds</title>
+
+
+
+    {% load static %}
+    <!--
+	<link rel="stylesheet" href="{% static 'default.css'%}"> -->
+
+	<style>
+
+	    .container {
+        display: flex;
+        flex-direction: column;
+        border-top: solid 1px #A8D0DB;
+        border-bottom: solid 1px #A8D0DB;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-left: 2%;
+        margin-top: 1%;
+        background-color: #ffffff;
+    }
+
+    .container_mlb {
+        /*display: flex;*/
+        flex-direction: column;
+        border-top: solid 1px #A8D0DB;
+        border-bottom: solid 1px #A8D0DB;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-left: 2%;
+        margin-top: 1%;
+        background-color: #ffffff;
+        display: none;
+    }
+
+    .container_mlb h3{
+        background-color: #eee"
+    }
+
+
+    .container_nba {
+        /*display: flex;*/
+        flex-direction: column;
+        border-top: solid 1px #A8D0DB;
+        border-bottom: solid 1px #A8D0DB;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-left: 2%;
+        margin-top: 1%;
+        background-color: #ffffff;
+        display: none;
+    }
+
+    .container_nhl {
+        /*display: flex;*/
+        flex-direction: column;
+        border-top: solid 1px #A8D0DB;
+        border-bottom: solid 1px #A8D0DB;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-left: 2%;
+        margin-top: 1%;
+        background-color: #ffffff;
+        display: none;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        align-items: left;
+    }
+    .row_away {
+        display: flex;
+        flex-direction: row;
+        align-items: left;
+        /*border-bottom: solid 1px #A8D0DB; */
+    }
+    .row_home {
+        display: flex;
+        flex-direction: row;
+        align-items: left;
+    }
+
+    .row:hover .element{
+    	color: red;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        /*border: solid 1px #A8D0DB; */
+        align-items: left;
+
+    }
+    .column_team_away {
+        display: flex;
+        flex-direction: column;
+        /*border-top: solid 1px #A8D0DB;*/
+        border-bottom: solid 1px #A8D0DB;
+        align-items: left;
+        width: 55%;
+        margin-left: 5%;
+
+    }
+
+    .column_team_home {
+        display: flex;
+        flex-direction: column;
+        /*border-bottom: solid 1px #A8D0DB;*/
+        align-items: left;
+        width: 55%;
+        margin-left: 5%;
+
+    }
+    .column_bet {
+        display: flex;
+        flex-direction: column;
+        border: solid 1px #A8D0DB;
+        align-items: center;
+        width: 15%;
+        background-color: #ffaf49;
+        justify-content: center ;
+        margin: 5px;
+    }
+    .column_bet p{
+       text-align: center;
+
+    }
+    .column_bet:hover {
+    	background-color: #a1e44d;
+    }
+    .header_row{
+    	margin-left: 2%;
+    	margin-right: 2%;
+    	border-bottom: solid 1px #A8D0DB;
+    	background-color: #ffffff
+    }
+    .header_row p{
+    	font-size: large;
+    }
+
+    .wager {
+    	width:15%;
+    	border: solid 2px #eeee;
+    	padding-left: 2%;
+    	padding-right: 2%;
+    }
+
+    .wager h1 {
+    	text-align: Center;
+    	font-size: xx-large;
+    }
+
+    .wager h2 {
+    	text-align: Center;
+    	font-size: large;
+    	color: darkgray;
+    }
+
+    .wager p {
+    	text-align: center;
+    	font-size: medium;
+
+    }
+
+    .betwindow {
+        visibility: hidden;
+    }
+
+    #bet {
+        width:50%;
+        visibility: hidden;
+    }
+
+    #book, #book2, #book3, #odds2, #odds3, #finalcalc {
+        font-size: medium;
+        visibility: hidden
+    }
+
+
+    .topnav {
+      overflow: hidden;
+      background-color: #a8d0db;
+    }
+
+    .topnav a {
+      float: left;
+      color: #261132;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .topnav a:hover {
+      background-color: #a1e44d;
+      color: black;
+    }
+
+    .topnav a.active {
+      background-color: #ffaf49;
+      color: white;
+    }
+
+    .topnav a.logo {
+      background-color: #3e2f5b;
+      color: white;
+    }
+
+    .league_filter {
+        text-align: center;
+        border: solid 1px #A8D0DB;
+    }
+
+    .league_select h3 {
+        text-align: center;
+        color: #3e2f5b;
+        font-size: Medium;
+    }
+
+    .league_filter p {
+        text-align: center;
+        color: #3e2f5b;
+    }
+
+    .league_filter:hover {
+    	background-color: #a1e44d;
+    }
+
+	</style>
+
+	<script>
+	   let globalbetcof = 1
+	   let globalwageramt = 0
+	  	    function displaybet(betselect,id ,betcof, book, book2, book3, odds2, odds3) {
+	  	        sportbook(book)
+	  	        sportbook2(book2)
+	  	        sportbook3(book3)
+	  	        Sport_odds2(odds2)
+	  	        Sport_odds3(odds3)
+	  	        for (const square of document.getElementsByClassName('betwindow')) {
+	  	            square.style.visibility = 'visible'
+	  	        }
+	  	        document.getElementById(id).innerHTML = betselect
+	  	        globalbetcof=betcof
+	  	        updateFinalCalc()
+	  	    }
+
+	  	    function betcalc(wageramt) {
+	  	        document.getElementById('finalcalc').style.visibility='visible';
+	  	        globalwageramt = wageramt
+	  	        updateFinalCalc()
+	  	    }
+
+	  	    function updateFinalCalc() {
+	  	        let finalcalc = globalwageramt * globalbetcof
+	  	        document.getElementById('finalcalc').innerHTML = 'Bet $' + globalwageramt + ' to win $' + (Math.round(finalcalc*100)/100).toFixed(2)
+	  	    }
+
+	  	    function sportbook(book) {
+	  	        document.getElementById('book').style.visibility='visible';
+	  	        document.getElementById('book').innerHTML = 'Your Best Bet is on ' + book + '!'
+	  	    }
+
+	  	    function sportbook2(book2) {
+	  	        document.getElementById('book2').style.visibility='visible';
+	  	        document.getElementById('book2').innerHTML = book2
+	  	    }
+
+	  	    function sportbook3(book3) {
+	  	        document.getElementById('book3').style.visibility='visible';
+	  	        document.getElementById('book3').innerHTML = book3
+	  	    }
+
+	  	    function Sport_odds2(odds2) {
+	  	        document.getElementById('odds2').style.visibility='visible';
+	  	        document.getElementById('odds2').innerHTML = odds2
+	  	    }
+
+	  	    function Sport_odds3(odds3) {
+	  	        document.getElementById('odds3').style.visibility='visible';
+	  	        document.getElementById('odds3').innerHTML = odds3
+	  	    }
+
+	  	    function displaymlb(leagueselect) {
+	  	        for (const circle of document.getElementsByClassName('container_mlb')) {
+	  	            circle.style.display = 'flex'
+	  	        }
+	  	    }
+
+	  	    function displaynba(leagueselect) {
+	  	        for (const circle of document.getElementsByClassName('container_nba')) {
+	  	            circle.style.display = 'flex'
+	  	        }
+	  	    }
+
+	  	    function displaynhl(leagueselect) {
+	  	        for (const circle of document.getElementsByClassName('container_nhl')) {
+	  	            circle.style.display = 'flex'
+	  	        }
+	  	    }
+
+
+
+        /*
+	  	filterObjects("all")
+		function filterObjects(c){
+			var x, i;
+			x=document.getElementsByClassName("container");
+			if (c=="all") c == "";
+			for (i = 0; i < x.length; i++) {
+				removeClass(x[i], "show");
+				if(x[i].className.indexOf(c) > -1) addClass(x[i], "show")
+			}
+		}
+
+		function addClass(element, name){
+			var i, arr1, arr2;
+			arr1 = element.className.split(" ");
+			arr2 = name.split(" ");
+			for (i = 0; i < arr2.length; i++){
+				if(arr1.indexOf(arr2[i]==-1)){
+					element.className += " " + arr2[i];
+				}
+			}
+		}
+
+		function removeClass (element, name){
+			var i, arr1, arr2;
+			arr1 = element.className.split (" ");
+			arr2 = name.split (" ");
+			for(i =0; arr2.length; i++){
+				while(arr1.indexOf(arr2[i]) > -1){
+					arr1.splice(arr1.indexOf(arr2[i]),1);
+				}
+			}
+			element.className = arr1.join(" ");
+		}*/
+
+
+	  	</script>
+</head>
+<body>
+
+    <div class="topnav">
+  <a class="logo" href="#logo">CASTLE ODDS LOGO</a>
+  <a href="#home">Home</a>
+  <a class="active" href="#signin">Sign In</a>
+  <a href="#account">Create Account</a>
+  <a href="#allsports">All Sports</a>
+  <a href="#nfl">NFL</a>
+  <a href="#nba">NBA</a>
+  <a href="#mlb">MLB</a>
+  <a href="#nhl">NHL</a>
+  <a href="#soccer">Soccer</a>
+  <a href="#avn">AVN</a>
+  <a href="#Ubi Yuma">Ubi Yuma</a>
+    </div>
+
+	<div style="display: flex; flex-direction: row; height: 100vh">
+	    <div style="flex-direction: column; width:15%; border: solid 2px #eeee; overflow: scroll;">
+	        <H3 class = "league_select"> American Leagues </H3>
+	        <div class = "league_filter" onclick="filterObjects('all')">
+	            <p>All Leagues</p>
+	        </div>
+	        <div class = "league_filter" onclick="displaymlb('mlb')">
+	            <p>MLB</p>
+	        </div>
+	        <div class = "league_filter" onclick="displaynba('nba')">
+	            <p>NBA</p>
+	        </div>
+	        <div class = "league_filter" onclick="displaynhl('nhl')">
+	            <p>NHL</p>
+	        </div>
+	        <div class = "league_filter" onclick="filterObjects('nfl')">
+	            <p>NFL</p>
+	        </div>
+	        <div class = "league_filter" onclick="filterObjects('mls')">
+	            <p>MLS</p>
+	        </div>
+	    </div>
+    		<div style="width:70%; border: solid 2px #eeee; overflow: scroll; background-color: #eee">
+    		    <div style="display: flex; flex-direction: column;">
+    		        <div style="display: flex; flex-direction: column; margin-left: 10%;">
+    		            <img style=" max-width: 90%; position: center;" src="https://library.sportingnews.com/2022-05/NBA-Finals-matchup-graphic-%28Warriors-vs-Celtics%29.jpg">
+    		        </div>
+        	    	<div class="header_row">
+        	  			<div class="row">
+        	    			<div style="width:50%; text-align: left; margin-left: 5%" >
+        	    				<p>Matchup</p>
+        	    			</div>
+        	    			<div style="width:15%; text-align: center;">
+        	      				<p>Spread</p>
+        	    			</div>
+        	    			<div style="width:15%; text-align: center;">
+        	      				<p>O/U</p>
+        	    			</div>
+        	    			<div style="width:15%; text-align: center;">
+        						<p>Moneyline</p>
+        	    			</div>
+        	  			</div>
+        	  		</div>
+        	  		<H3 class = "container_mlb"> MLB </H3>
+            	    {% for MLB in MLB%}
+        	    	<div class="container_mlb">
+        	    		<div class = "row" >{{MLB.start_time}} </div>
+        	  			<div class="row_away">
+        	    			<div class="column_team_away" >
+        	    				<p>{{MLB.away_team}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{MLB.away_team}} {{MLB.away_spread1}} spread ({{MLB.spread_away_price1_ST}})' ,'bet',{{MLB.spread_away_price1}}, '{{MLB.Sportsbook_spread_away_price1}}','{{MLB.Sportsbook_spread_away_price2}}','{{MLB.Sportsbook_spread_away_price3}}', '{{MLB.away_team}} {{MLB.away_spread2}} spread ({{MLB.spread_away_price2_ST}})', '{{MLB.away_team}} {{MLB.away_spread3}} spread ({{MLB.spread_away_price3_ST}})')">
+        	      			        <p>{{MLB.away_spread1}}
+        	      			        </br>
+        	      			        {{MLB.spread_away_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{MLB.away_team}} vs {{MLB.home_team}} Over {{MLB.over1}} ({{MLB.over_price1_ST}})','bet',{{MLB.over_price1}},'{{MLB.Sportsbook_over_price1}}', '{{MLB.Sportsbook_over_price2}}', '{{MLB.Sportsbook_over_price3}}', '{{MLB.away_team}} vs {{MLB.home_team}} Over {{MLB.over2}} ({{MLB.over_price2_ST}})', '{{MLB.away_team}} vs {{MLB.home_team}} Over {{MLB.over3}} ({{MLB.over_price3_ST}})')">
+        	      				<p>{{MLB.over1}}
+        	      				</br> {{MLB.over_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{MLB.away_team}} ML ({{MLB.H2H_away_price1_ST}})','bet',{{MLB.H2H_away_price1}},'{{MLB.SportsbookH2H_away_price1}}', '{{MLB.SportsbookH2H_away_price2}}', '{{MLB.SportsbookH2H_away_price3}}', '{{MLB.away_team}} ML ({{MLB.H2H_away_price2_ST}})', '{{MLB.away_team}} ML ({{MLB.H2H_away_price3_ST}})')">
+        						<p>{{MLB.H2H_away_price1_ST}}</p>
+        	    			</div>
+        	  			</div>
+        	  			<div class="row_home">
+        	    			<div class="column_team_home">
+        	    				<p>{{MLB.home_team}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{MLB.home_team}} {{MLB.home_spread1}} spread ({{MLB.spread_home_price1_ST}})' ,'bet', {{MLB.spread_home_price1}}, '{{MLB.Sportsbook_spread_home_price1}}', '{{MLB.Sportsbook_spread_home_price2}}', '{{MLB.Sportsbook_spread_home_price3}}', '{{MLB.home_team}} {{MLB.home_spread2}} spread ({{MLB.spread_home_price2_ST}})', '{{MLB.home_team}} {{MLB.home_spread3}} spread ({{MLB.spread_home_price3_ST}})')">
+        	      		    	<p>{{MLB.home_spread1}}
+        	      				</br> {{MLB.spread_home_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{MLB.away_team}} vs {{MLB.home_team}} Under {{MLB.under1}} ({{MLB.under_price1_ST}})','bet',{{MLB.under_price1}},'{{MLB.Sportsbook_under_price1}}', '{{MLB.Sportsbook_under_price2}}', '{{MLB.Sportsbook_under_price3}}', '{{MLB.away_team}} vs {{MLB.home_team}} Under {{MLB.under2}} ({{MLB.under_price2_ST}})', '{{MLB.away_team}} vs {{MLB.home_team}} Under {{MLB.under3}} ({{MLB.under_price3_ST}})')">
+        	      				<p>{{MLB.under1}}
+        	      				</br> {{MLB.under_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{MLB.home_team}} ML ({{MLB.H2H_home_price1_ST}})','bet', {{MLB.H2H_home_price1}}, '{{MLB.SportsbookH2H_home_price1}}', '{{MLB.SportsbookH2H_home_price2}}', '{{MLB.SportsbookH2H_home_price3}}', '{{MLB.home_team}} ML ({{MLB.H2H_home_price2_ST}})', '{{MLB.home_team}} ML ({{MLB.H2H_home_price3_ST}})')">
+        						<p>{{MLB.H2H_home_price1_ST}}</p>
+        	    			</div>
+        	  			</div>
+        	  		</div>
+        	  	    {% endfor %}
+        	  	    <H3 class = "container_nba" id = "league_header"> NBA </H3>
+        	  	    {% for NBA in NBA%}
+        	    	<div class="container_nba">
+
+        	    		<div class = "row" >{{NBA.start_time}} </div>
+        	  			<div class="row_away">
+        	    			<div class="column_team_away" >
+        	    				<p>{{NBA.away_team}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NBA.away_team}} {{NBA.away_spread1}} spread ({{NBA.spread_away_price1_ST}})' ,'bet',{{NBA.spread_away_price1}}, '{{NBA.Sportsbook_spread_away_price1}}','{{NBA.Sportsbook_spread_away_price2}}','{{NBA.Sportsbook_spread_away_price3}}', '{{NBA.away_team}} {{NBA.away_spread2}} spread ({{NBA.spread_away_price2_ST}})', '{{NBA.away_team}} {{NBA.away_spread3}} spread ({{NBA.spread_away_price3_ST}})')">
+        	      			        <p>{{NBA.away_spread1}}
+        	      			        </br>
+        	      			        {{NBA.spread_away_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NBA.away_team}} vs {{NBA.home_team}} Over {{NBA.over1}} ({{NBA.over_price1_ST}})','bet',{{NBA.over_price1}},'{{NBA.Sportsbook_over_price1}}', '{{NBA.Sportsbook_over_price2}}', '{{NBA.Sportsbook_over_price3}}', '{{NBA.away_team}} vs {{NBA.home_team}} Over {{NBA.over2}} ({{NBA.over_price2_ST}})', '{{NBA.away_team}} vs {{NBA.home_team}} Over {{NBA.over3}} ({{NBA.over_price3_ST}})')">
+        	      				<p>{{NBA.over1}}
+        	      				</br> {{NBA.over_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NBA.away_team}} ML ({{NBA.H2H_away_price1_ST}})','bet',{{NBA.H2H_away_price1}},'{{NBA.SportsbookH2H_away_price1}}', '{{NBA.SportsbookH2H_away_price2}}', '{{NBA.SportsbookH2H_away_price3}}', '{{NBA.away_team}} ML ({{NBA.H2H_away_price2_ST}})', '{{NBA.away_team}} ML ({{NBA.H2H_away_price3_ST}})')">
+        						<p>{{NBA.H2H_away_price1_ST}}</p>
+        	    			</div>
+        	  			</div>
+        	  			<div class="row_home">
+        	    			<div class="column_team_home">
+        	    				<p>{{NBA.home_team}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NBA.home_team}} {{NBA.home_spread1}} spread ({{NBA.spread_home_price1_ST}})' ,'bet', {{NBA.spread_home_price1}}, '{{NBA.Sportsbook_spread_home_price1}}', '{{NBA.Sportsbook_spread_home_price2}}', '{{NBA.Sportsbook_spread_home_price3}}', '{{NBA.home_team}} {{NBA.home_spread2}} spread ({{NBA.spread_home_price2_ST}})', '{{NBA.home_team}} {{NBA.home_spread3}} spread ({{NBA.spread_home_price3_ST}})')">
+        	      		    	<p>{{NBA.home_spread1}}
+        	      				</br> {{NBA.spread_home_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NBA.away_team}} vs {{NBA.home_team}} Under {{NBA.under1}} ({{NBA.under_price1_ST}})','bet',{{NBA.under_price1}},'{{NBA.Sportsbook_under_price1}}', '{{NBA.Sportsbook_under_price2}}', '{{NBA.Sportsbook_under_price3}}', '{{NBA.away_team}} vs {{NBA.home_team}} Under {{NBA.under2}} ({{NBA.under_price2_ST}})', '{{NBA.away_team}} vs {{NBA.home_team}} Under {{NBA.under3}} ({{NBA.under_price3_ST}})')">
+        	      				<p>{{NBA.under1}}
+        	      				</br> {{NBA.under_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NBA.home_team}} ML ({{NBA.H2H_home_price1_ST}})','bet', {{NBA.H2H_home_price1}}, '{{NBA.SportsbookH2H_home_price1}}', '{{NBA.SportsbookH2H_home_price2}}', '{{NBA.SportsbookH2H_home_price3}}', '{{NBA.home_team}} ML ({{NBA.H2H_home_price2_ST}})', '{{NBA.home_team}} ML ({{NBA.H2H_home_price3_ST}})')">
+        						<p>{{NBA.H2H_home_price1_ST}}</p>
+        	    			</div>
+        	  			</div>
+        	  		</div>
+        	  	    {% endfor %}
+        	  	    <H3 class = "container_nhl"> NHL </H3>
+        	  	    {% for NHL in NHL%}
+        	    	<div class= "container_nhl">
+
+        	    		<div class = "row" >{{NHL.start_time}} </div>
+        	  			<div class="row_away">
+        	    			<div class="column_team_away" >
+        	    				<p>{{NHL.away_team}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NHL.away_team}} {{NHL.away_spread1}} spread ({{NHL.spread_away_price1_ST}})' ,'bet',{{NHL.spread_away_price1}}, '{{NHL.Sportsbook_spread_away_price1}}','{{NHL.Sportsbook_spread_away_price2}}','{{NHL.Sportsbook_spread_away_price3}}', '{{NHL.away_team}} {{NHL.away_spread2}} spread ({{NHL.spread_away_price2_ST}})', '{{NHL.away_team}} {{NHL.away_spread3}} spread ({{NHL.spread_away_price3_ST}})')">
+        	      			        <p>{{NHL.away_spread1}}
+        	      			        </br>
+        	      			        {{NHL.spread_away_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NHL.away_team}} vs {{NHL.home_team}} Over {{NHL.over1}} ({{NHL.over_price1_ST}})','bet',{{NHL.over_price1}},'{{NHL.Sportsbook_over_price1}}', '{{NHL.Sportsbook_over_price2}}', '{{NHL.Sportsbook_over_price3}}', '{{NHL.away_team}} vs {{NHL.home_team}} Over {{NHL.over2}} ({{NHL.over_price2_ST}})', '{{NHL.away_team}} vs {{NHL.home_team}} Over {{NHL.over3}} ({{NHL.over_price3_ST}})')">
+        	      				<p>{{NHL.over1}}
+        	      				</br> {{NHL.over_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NHL.away_team}} ML ({{NHL.H2H_away_price1_ST}})','bet',{{NHL.H2H_away_price1}},'{{NHL.SportsbookH2H_away_price1}}', '{{NHL.SportsbookH2H_away_price2}}', '{{NHL.SportsbookH2H_away_price3}}', '{{NHL.away_team}} ML ({{NHL.H2H_away_price2_ST}})', '{{NHL.away_team}} ML ({{NHL.H2H_away_price3_ST}})')">
+        						<p>{{NHL.H2H_away_price1_ST}}</p>
+        	    			</div>
+        	  			</div>
+        	  			<div class="row_home">
+        	    			<div class="column_team_home">
+        	    				<p>{{NHL.home_team}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NHL.home_team}} {{NHL.home_spread1}} spread ({{NHL.spread_home_price1_ST}})' ,'bet', {{NHL.spread_home_price1}}, '{{NHL.Sportsbook_spread_home_price1}}', '{{NHL.Sportsbook_spread_home_price2}}', '{{NHL.Sportsbook_spread_home_price3}}', '{{NHL.home_team}} {{NHL.home_spread2}} spread ({{NHL.spread_home_price2_ST}})', '{{NHL.home_team}} {{NHL.home_spread3}} spread ({{NHL.spread_home_price3_ST}})')">
+        	      		    	<p>{{NHL.home_spread1}}
+        	      				</br> {{NHL.spread_home_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NHL.away_team}} vs {{NHL.home_team}} Under {{NHL.under1}} ({{NHL.under_price1_ST}})','bet',{{NHL.under_price1}},'{{NHL.Sportsbook_under_price1}}', '{{NHL.Sportsbook_under_price2}}', '{{NHL.Sportsbook_under_price3}}', '{{NHL.away_team}} vs {{NHL.home_team}} Under {{NHL.under2}} ({{NHL.under_price2_ST}})', '{{NHL.away_team}} vs {{NHL.home_team}} Under {{NHL.under3}} ({{NHL.under_price3_ST}})')">
+        	      				<p>{{NHL.under1}}
+        	      				</br> {{NHL.under_price1_ST}}</p>
+        	    			</div>
+        	    			<div class="column_bet" onclick="displaybet('{{NHL.home_team}} ML ({{NHL.H2H_home_price1_ST}})','bet', {{NHL.H2H_home_price1}}, '{{NHL.SportsbookH2H_home_price1}}', '{{NHL.SportsbookH2H_home_price2}}', '{{NHL.SportsbookH2H_home_price3}}', '{{NHL.home_team}} ML ({{NHL.H2H_home_price2_ST}})', '{{NHL.home_team}} ML ({{NHL.H2H_home_price3_ST}})')">
+        						<p>{{NHL.H2H_home_price1_ST}}</p>
+        	    			</div>
+        	  			</div>
+        	  		</div>
+        	  	    {% endfor %}
+        	  	</div>
+        	  </div>
+
+	  	<div class = "wager">
+	  		<h1 class = "betwindow">Your Wager</h1>
+	 		<div>
+	 			<p style="font-size: medium;" class = "betwindow" id = "book"> Your best bet is on  </p>
+	 		</div>
+	 		<div style="display: flex; flex-direction: row;">
+	 			<div> <p class = "betwindow" id="bet">  </p> </div>
+	 			<form style= "width: 50%;">
+				  <input type="number" class = "betwindow" name="wager" oninput="betcalc(this.value)">
+				</form>
+	 		</div>
+	 		<h2 class = "betwindow"> Books with better odds</h2>
+	 		    <div class = "betwindow" style="display:flex; flex-direction: column; border: solid 1px #A8D0DB" >
+    	 			<div style="display:flex; flex-direction: row; border: solid 1px #A8D0DB">
+    	 				<div style="width: 50%;"><p id = "book2"> </p> </div>
+    	 				<div style="width: 50%;"><p id = "odds2"> </p> </div>
+    	 			</div>
+    	 			<div style="display:flex; flex-direction: row; border: solid 1px #A8D0DB">
+    	 				<div style="width: 50%;"><p id = "book3"> </p> </div>
+    	 				<div style="width: 50%;"><p id = "odds3"> </p></div>
+    	 			</div>
+    	 		</div>
+	 		</br>
+	 		<div class = "betwindow" style="text-align: center; height: 15%;" >
+	 			<div style = "text-align: center; background-color: #5BC0EB; color: white;"><p id ="finalcalc" style = "font-size: xx-large;"> </p></div>
+	 		</div>
+
+	 		</br>
+	 		<button style="position: center; visibility: hidden;">Submit</button>
+
+
+	  	</div>
+
+
+</body>
+</html>
